@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // находим все Item'ы в базе
         items = realm.where(Item.class).findAll();
         // и создаём адаптер с ними
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        adapter = new RealmListAdapter<>(this, android.R.layout.simple_list_item_1, items);
 
         // находим ListView
         ListView listView = (ListView) findViewById(R.id.list);
@@ -80,13 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         addItem(input.getText().toString());
-                        // костыль: обновить адаптер чуть позже
-                        getWindow().getDecorView().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                            }
-                        }, 0);
                     }
                 })
                 .setNeutralButton("Cancel", null)
@@ -106,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         updateItem(pos, input.getText().toString());
-                        adapter.notifyDataSetChanged();
                     }
                 })
                 .setNeutralButton("Cancel", null)
@@ -121,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         removeItem(pos);
-                        adapter.notifyDataSetChanged();
                     }
                 })
                 .setNeutralButton("Cancel", null)
