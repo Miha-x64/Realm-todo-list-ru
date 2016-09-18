@@ -1,4 +1,4 @@
-package net.aquadc.realmtest;
+package net.aquadc.realmtest.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
